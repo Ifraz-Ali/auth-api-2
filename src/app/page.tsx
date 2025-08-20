@@ -125,7 +125,7 @@ function LoginPage() {
                 Forgot your password?
               </Link>
               <p className="text-sm text-slate-600">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <button
                   type="button"
                   onClick={() => window.location.href = '/register'}
@@ -152,7 +152,7 @@ function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (password !== confirmPassword) {
-      alert("Passwords don't match!")
+      alert("Passwords don&apos;t match!")
       return
     }
     if (username && email && password) {
@@ -305,7 +305,7 @@ function WelcomePage() {
         <div className="space-y-6">
           <div className="text-center space-y-2">
             <h2 className="text-3xl font-bold text-slate-800">Welcome back!</h2>
-            <p className="text-slate-600">Here's your account information</p>
+            <p className="text-slate-600">Here&apos;s your account information</p>
           </div>
 
           <div className="max-w-2xl mx-auto shadow-lg border-0 bg-white/80 backdrop-blur-sm rounded-lg">
