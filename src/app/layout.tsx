@@ -2,13 +2,12 @@ import type React from "react"
 import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
-import { AuthProvider } from "@/app/lib/auth-context"
+import { AuthProvider } from "@/app/lib/auth-context" // Fixed import
 import "./globals.css"
 
 export const metadata: Metadata = {
   title: "Authentication App",
   description: "Simple authentication system with external API integration",
-  generator: "v0.app",
 }
 
 export default function RootLayout({

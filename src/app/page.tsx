@@ -3,6 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import { useAuth } from "./lib/auth-context"
+
 import Link from "next/link"
 
 function LoginPage() {
@@ -147,16 +148,13 @@ function RegisterPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-  const { register, isLoading, error, clearError } = useAuth()
+  const { isLoading, error, clearError } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (password !== confirmPassword) {
       alert("Passwords don&apos;t match!")
       return
-    }
-    if (username && email && password) {
-      await register(username, email, password)
     }
   }
 

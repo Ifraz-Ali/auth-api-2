@@ -1,6 +1,6 @@
 "use client"
 
-import React, { createContext, useContext, useState, useEffect } from "react"
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react"
 import type { User } from "./type"
 
 interface AuthContextType {
@@ -18,7 +18,11 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+interface AuthProviderProps {
+  children: ReactNode
+}
+
+export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null)
   const [token, setToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -28,10 +32,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const storedToken = localStorage.getItem("auth_token")
     if (storedToken) {
       setToken(storedToken)
-      setIsLoading(false)
-    } else {
-      setIsLoading(false)
     }
+    setIsLoading(false)
   }, [])
 
   const clearError = () => {
@@ -44,21 +46,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem("auth_token")
   }
 
+  const contextValue: AuthContextType = {
+    user,
+    token,
+    setUser,
+    setToken,
+    logout,
+    isLoading,
+    setIsLoading,
+    error,
+    setError,
+    clearError,
+  }
+
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        token,
-        setUser,
-        setToken,
-        logout,
-        isLoading,
-        setIsLoading,
-        error,
-        setError,
-        clearError,
-      }}
-    >
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   )
