@@ -7,7 +7,7 @@ import { useAuth } from "./lib/auth-context"
 import Link from "next/link"
 
 function LoginPage() {
-  const [email, setEmail] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
@@ -15,7 +15,7 @@ function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (email && password) {
+    if (username && password) {
       setIsLoading(true)
       setError("")
 
@@ -25,11 +25,15 @@ function LoginPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({ username: username.trim(), password: password.trim() }),
         })
 
         const data = await response.json()
-
+        console.log("Login response:", {
+          status: response.status,
+          statusText: response.statusText,
+          data: data
+        })
         if (!response.ok) {
           throw new Error(data.message || data.error || `HTTP ${response.status}`)
         }
@@ -38,8 +42,8 @@ function LoginPage() {
 
         setToken(authToken)
         setUser({
-          username: email.split('@')[0],
-          email: email,
+          username: username,
+          email: username,
         })
         localStorage.setItem("auth_token", authToken)
       } catch (err) {
@@ -77,15 +81,15 @@ function LoginPage() {
             )}
 
             <div className="space-y-2">
-              <label htmlFor="email" className="text-slate-700 font-medium text-sm block">
-                Email Address
+              <label htmlFor="username" className="text-slate-700 font-medium text-sm block">
+                Username
               </label>
               <input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                id="username"
+                type="text"
+                placeholder="Enter your username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
                 className="w-full text-gray-700 px-3 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-400"
               />
